@@ -16,7 +16,7 @@
 
  
 
-##### Proposta de Solução do Problema:
+##### Proposta de Solução para o Problema:
 
 ​      O projeto PetHealthy está embasado na única proposta de gerir informações de saúde do animal doméstico, onde o usuário sinta-se confortável em manipular e controlar todas as informações com segurança dos dados que serão fornecidos ao sistema. Esses dados estarão sempre a dispor do usuário para que ele possa ter a flexibilização de acesso ao mesmo. 
 
