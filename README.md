@@ -1,6 +1,6 @@
-# PetHealthy (v.1.0)
+# PetHealthy
 
-## Controle de Saúde do Animal Doméstico				
+## Controle de Saúde do Animal Doméstico				v.1.0
 
 ![](https://camo.githubusercontent.com/96ebfe138ae4b132bba73d52096e1049a9c4619541ed83356de28531aba45a68/68747470733a2f2f66696c65732e656e67616765642e636f6d2e62722f3564623036383736643139363562303030373434303263322f6163636f756e742f3564623036383736643139363562303030373434303263322f514a31706a6d4b55514a47515a524f38554f50565f6c6f676f732d66696e616c2d31342e706e67)
 
@@ -30,7 +30,19 @@ Trello do PetHealthy:
 
  
 
-#### Diagrama de Fluxo:
+#### Diagrama do Projeto:
+
+##### Diagrama de Caso de Uso:
+
+![](C:\Users\abdel\OneDrive\Área de Trabalho\PetHealthy-1\Diagramas\Diagrama de caso de uso PetHealthy sem fundo.png)
+
+##### Diagrama de Classe:
+
+
+
+##### Diagrama de Sequência:
+
+
 
  
 
@@ -45,4 +57,3 @@ Trello do PetHealthy:
  
 
 ###### *Última atualização: 12/03/2023 21:40*
-
