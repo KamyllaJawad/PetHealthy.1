@@ -34,7 +34,7 @@ Trello do PetHealthy:
 
 ##### Diagrama de Caso de Uso:
 
-![](C:\Users\abdel\OneDrive\Área de Trabalho\PetHealthy-1\Diagramas\Diagrama de caso de uso PetHealthy sem fundo.png)
+![](Diagramas\Diagrama de caso de uso PetHealthy sem fundo.pngDiagrama de caso de uso PetHealthy sem fundo.png)
 
 ##### Diagrama de Classe:
 
