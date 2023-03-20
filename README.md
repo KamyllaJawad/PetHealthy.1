@@ -34,7 +34,7 @@ Trello do PetHealthy:
 
 ##### Diagrama de Caso de Uso:
 
-![](Diagramas\Diagrama de caso de uso PetHealthy sem fundo.pngDiagrama de caso de uso PetHealthy sem fundo.png)
+![](https://github.com/KamyllaJawad/PetHealthy/blob/master/Diagramas/Diagrama%20de%20caso%20de%20uso%20PetHealthy%20sem%20fundo.png?raw=true)
 
 ##### Diagrama de Classe:
 
