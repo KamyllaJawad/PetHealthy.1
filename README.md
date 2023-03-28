@@ -14,6 +14,7 @@
 
 ​	Para esse projeto está sendo utilizado como base sete pessoas proprietárias de animal doméstico e uma instituição de acolhimento animal Cabanha Don Oscar², os mesmos contribuíram para a identificação do problema identificado.
 
+Defesa do tema: https://1drv.ms/p/s!ArygLqoGJT7FgaQcuIERbWcs39MneQ?e=RhIVt5
  
 
 ##### Proposta de Solução para o Problema:
@@ -39,12 +40,6 @@ https://trello.com/invite/b/CkrzgTVa/ATTI7323ec2ef63c17a23e617a1ffaccfcea4F48614
 ##### Diagrama de Fluxo:
 
 ![](https://github.com/KamyllaJawad/PetHealthy/blob/master/Diagramas/fluxo.jpeg?raw=true)
-
-##### Diagrama de Sequência:
-
-
-
- 
 
  
 
