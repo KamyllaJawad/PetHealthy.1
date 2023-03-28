@@ -41,6 +41,10 @@ https://trello.com/invite/b/CkrzgTVa/ATTI7323ec2ef63c17a23e617a1ffaccfcea4F48614
 
 ![](https://github.com/KamyllaJawad/PetHealthy/blob/master/Diagramas/fluxo.jpeg?raw=true)
 
+##### Diagrama de Classe:
+
+![](https://raw.githubusercontent.com/KamyllaJawad/PetHealthy/master/Diagramas/Classe%20UML.jpeg)
+
  
 
 #### Referências:
