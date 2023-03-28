@@ -26,7 +26,7 @@
 
 Trello do PetHealthy:
 
- https://trello.com/b/CkrzgTVa/pethealthy
+https://trello.com/invite/b/CkrzgTVa/ATTI7323ec2ef63c17a23e617a1ffaccfcea4F48614B/pethealthy
 
  
 
