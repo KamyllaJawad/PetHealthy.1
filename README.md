@@ -38,7 +38,7 @@ Trello do PetHealthy:
 
 ##### Diagrama de Classe:
 
-
+![](https://github.com/KamyllaJawad/PetHealthy/blob/master/Diagramas/fluxo.jpeg?raw=true)
 
 ##### Diagrama de Sequência:
 
