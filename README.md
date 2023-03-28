@@ -36,7 +36,7 @@ https://trello.com/invite/b/CkrzgTVa/ATTI7323ec2ef63c17a23e617a1ffaccfcea4F48614
 
 ![](https://github.com/KamyllaJawad/PetHealthy/blob/master/Diagramas/Diagrama%20de%20caso%20de%20uso%20PetHealthy%20sem%20fundo.png?raw=true)
 
-##### Diagrama de Classe:
+##### Diagrama de Fluxo:
 
 ![](https://github.com/KamyllaJawad/PetHealthy/blob/master/Diagramas/fluxo.jpeg?raw=true)
 
