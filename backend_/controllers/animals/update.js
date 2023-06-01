@@ -1,4 +1,4 @@
-// const { User } = require('../../app/models')
+// const { Animal } = require('../../app/models')
 // const jwt = require('jsonwebtoken');
 
 // module.exports = async (req, res) => {

@@ -1,12 +1,11 @@
-const { User } = require('../../app/models')
-
+const { Animal } = require('../../app/models')
 
 module.exports = async (req, res) => {
     try {
         const requestData = extractData(req)
         await analyseData(requestData)
-        const user = await createUser(requestData)
-        return res.send(user)
+        const animal = await createAnimal(requestData)
+        return res.send(animal)
     } catch (error) {
         console.log(error)
         return res.send(error)
@@ -14,14 +13,14 @@ module.exports = async (req, res) => {
 }
 
 function extractData(request) {
-    const { name, email, password, cpf, login, birthdate } = request.body
-    return { name, email, password, cpf, login, birthdate }
+    const { name, age, weight, breed, coat_color, size, species, reg_ibama } = request.body
+    return { name, age, weight, breed, coat_color, size, species, reg_ibama }
 }
 
 async function analyseData(request) {
     try {
-        if(!request.login || !request.email) {
-            throw new Error(`Nome e Email são obrigatorios`)
+        if(!request.weight || !request.size) {
+            throw new Error(`Idade e peso são obrigatorios`)
         }
         return
     } catch (error) {
@@ -30,9 +29,9 @@ async function analyseData(request) {
     }
 }
 
-async function createUser(request) {
+async function createAnimal(request) {
     try {
-        return await User.create(request)
+        return await Animal.create(request)
     } catch (error) {
         console.log(error)
         throw new Error(error)
