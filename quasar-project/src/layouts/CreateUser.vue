@@ -1,55 +1,11 @@
 <template>
-  <div>
-    <q-input
-      filled
-      v-model="name"
-      label="Name"
-      class="q-my-md"
-      outlined
-      dense
-    ></q-input>
-    <q-input
-      filled
-      v-model="email"
-      label="Email"
-      class="q-my-md"
-      outlined
-      dense
-    ></q-input>
-    <q-input
-      filled
-      v-model="password"
-      label="Password"
-      class="q-my-md"
-      type="password"
-      outlined
-      dense
-    ></q-input>
-    <q-input
-      filled
-      v-model="cpf"
-      label="CPF"
-      class="q-my-md"
-      outlined
-      dense
-    ></q-input>
-    <q-input
-      filled
-      v-model="login"
-      label="Login"
-      class="q-my-md"
-      outlined
-      dense
-    ></q-input>
-    <q-input
-      filled
-      v-model="birthdate"
-      label="Birthdate"
-      type="date"
-      class="q-my-md"
-      outlined
-      dense
-    ></q-input>
+  <div class="text-weight-light">
+    <q-input filled v-model="name" label="Nome" class="q-my-md" outlined dense></q-input>
+    <q-input filled v-model="email" label="E-mail" class="q-my-md" outlined dense></q-input>
+    <q-input filled v-model="password" label="Senha" class="q-my-md" type="password" outlined dense></q-input>
+    <q-input filled v-model="cpf" label="CPF" class="q-my-md" outlined dense></q-input>
+    <q-input filled v-model="login" label="Login" class="q-my-md" outlined dense></q-input>
+    <q-input filled v-model="birthdate" label="Data de nascimento" type="date" class="q-my-md" outlined dense></q-input>
     <q-btn color="primary" label="Register" @click="submitRegistration"></q-btn>
   </div>
 </template>

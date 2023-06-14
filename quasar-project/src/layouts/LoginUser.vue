@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="text-weight-light">
     <q-input filled v-model="login" label="Login" outlined dense></q-input>
     <q-input
       filled
       v-model="password"
-      label="Password"
+      label="Senha"
       class="q-my-md"
       type="password"
       outlined
@@ -25,7 +25,7 @@ export default {
   },
   //onde armazeno e crio as funções
   methods: {
-    submitLogin() {
+    async submitLogin() {
       let data = JSON.stringify({
         login: this.login,
         password: this.password,
@@ -41,11 +41,11 @@ export default {
         data: data,
       };
 
-      axios
+      await axios
         .request(config)
         .then((response) => {
           console.log(JSON.stringify(response.data));
-          localStorage.setItem("token", response.data);
+          this.setToken(response.data);
         })
         .catch((error) => {
           console.log(error);
@@ -53,6 +53,11 @@ export default {
 
       // Aqui você pode fazer uma chamada de API para autenticar o usuário
       // usando os valores dos campos "login" e "password"
+    },
+
+    setToken(token) {
+      this.$emit("newToken", token);
+      localStorage.setItem("token", token);
     },
   },
 };

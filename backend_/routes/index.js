@@ -1,6 +1,6 @@
 const bodyParser = require('body-parser')
 const users = require('./user')
-const animals = require('./animals')
+const animals = require('./animal')
 // create application/json parser
 var jsonParser = bodyParser.json()
 

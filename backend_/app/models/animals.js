@@ -9,10 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       age: DataTypes.INTEGER,
       weight: DataTypes.DECIMAL,
       breed: DataTypes.STRING,
-      coatColor: DataTypes.STRING,
+      coat_color: DataTypes.STRING,
       size: DataTypes.STRING,
       species: DataTypes.STRING,
-      regIbama: DataTypes.STRING
+      reg_ibama: DataTypes.STRING
     }, {
       tableName: 'animals',
       timestamps: false

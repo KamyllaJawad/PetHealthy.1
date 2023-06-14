@@ -1,35 +1,61 @@
 <template>
-  <div class="q-pa-md">
-    <q-toolbar class="bg-secondary text-white q-my-md shadow-2">
-      <q-btn flat round dense icon="menu" class="q-mr-sm" />
+  <q-header>
+    <q-toolbar class="q-pa-xs q-toolbar-sm bg-custom-color">
 
+
+      <div class="q-gutter-sm">
+          <q-icon color="cyan-2" size="md" name="cruelty_free"  />
+      </div>
+      <span class="q-ml-xs text-large">Meus Pets</span>
       <q-space />
 
-      <q-btn-toggle
-        v-model="model"
-        flat
-        stretch
-        toggle-color="yellow"
-        :options="options"
-      />
+      <CreateAnimal />
+      <DropdownUserSettings />
     </q-toolbar>
-  </div>
+  </q-header>
 </template>
 
 <script>
 import { ref } from "vue";
+import CreateAnimal from "./CreateAnimal.vue";
+import DropdownUserSettings from "./DropdownUserSettings.vue";
 
 export default {
+  components: {
+    CreateAnimal,
+    DropdownUserSettings,
+  },
   setup() {
     return {
       model: ref("one"),
-
-      options: [
-        { label: "One", value: "one" },
-        { label: "Two", value: "two" },
-        { label: "Three", value: "three" },
-      ],
     };
   },
 };
 </script>
+
+<style>
+.q-icon-md {
+  font-size: 18px;
+  line-height: 18px;
+}
+
+.q-toolbar-sm {
+    position: fixed;
+  height: 48px !important;
+  min-height: 48px !important;
+}
+
+.bg-custom-color {
+  background-color: #00bcd4 !important;
+}
+
+.text-large {
+  font-size: 18px;
+  line-height: 18px;
+}
+
+.is-mobile {
+  position: relative;
+  bottom: unset;
+}
+</style>

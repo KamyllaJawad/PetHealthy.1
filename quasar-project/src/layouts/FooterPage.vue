@@ -1,12 +1,11 @@
 <template>
-  <q-footer class="footer" v-if="isMobile">
-    <div class="text-center">© {{ currentYear }} PetHealthy</div>
-  </q-footer>
-  <q-footer class="footer" v-else>
-    <div class="text-center">
-      © {{ currentYear }} PetHealthy - All rights reserved.
-    </div>
-  </q-footer>
+  <div>
+    <q-footer class="footer" :class="{ 'is-mobile': isMobile }">
+      <div class="text-center">
+        © {{ currentYear }} PetHealthy{{ isMobile ? '' : ' - All rights reserved' }}
+      </div>
+    </q-footer>
+  </div>
 </template>
 
 <script>
@@ -32,12 +31,20 @@ export default {
 };
 </script>
 
-<!-- <style scoped>
+<style scoped>
 .footer {
   position: fixed;
   bottom: 0;
+  left: 0;
   width: 100%;
-  background-color: #f5f5f5;
-  padding: 15px;
+  background-color: #00bcd4;
+  padding: 10px;
+  height: 40px;
+  color: white;
 }
-</style> -->
+
+.is-mobile {
+  position: relative;
+  bottom: unset;
+}
+</style>
