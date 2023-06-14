@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Fullstack Application",
   "scripts": {
+    "start": "node index.js",
     "backend": "cd backend_ && npm install && npm start",
     "frontend": "cd quasar-project && npm install && quasar dev",
     "pipeline": "npm run backend && npm run frontend"
@@ -16,42 +17,9 @@
     "mysql2": "^3.3.2",
     "pg": "^8.11.0",
     "sequelize": "^6.31.1",
-    "socket.io": "^4.6.2",
-    "@fortawesome/fontawesome-free": "^6.4.0",
-    "@ionic/vue": "^7.0.11",
-    "@quasar/extras": "^1.0.0",
-    "axios": "^1.4.0",
-    "bootstrap-icons": "^1.10.5",
-    "core-js": "^3.6.5",
-    "ionicons": "^7.1.2",
-    "quasar": "^2.6.0",
-    "vue": "^3.0.0",
-    "vue-router": "^4.0.0"
+    "socket.io": "^4.6.2"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.13.14",
-    "@quasar/app-webpack": "^3.0.0",
-    "eslint": "^8.10.0",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-vue": "^9.0.0",
-    "eslint-webpack-plugin": "^3.1.1",
-    "prettier": "^2.5.1",
     "sequelize-cli": "^6.6.0"
-  },
-  "browserslist": [
-    "last 10 Chrome versions",
-    "last 10 Firefox versions",
-    "last 4 Edge versions",
-    "last 7 Safari versions",
-    "last 8 Android versions",
-    "last 8 ChromeAndroid versions",
-    "last 8 FirefoxAndroid versions",
-    "last 10 iOS versions",
-    "last 5 Opera versions"
-  ],
-  "engines": {
-    "node": ">= 12.22.1",
-    "npm": ">= 6.13.4",
-    "yarn": ">= 1.21.1"
   }
 }
