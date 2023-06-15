@@ -10,7 +10,8 @@
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
-    "build": "quasar build"
+    "build": "quasar build",
+    "start": "cd ../backend_ && npm install && node app.js",
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.0",
