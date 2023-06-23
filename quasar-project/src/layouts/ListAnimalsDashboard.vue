@@ -28,32 +28,118 @@
             </q-list>
             <q-separator dark inset />
             <q-card-actions class="justify-center text-weight-light">
-              <ModalInfoAnimal>Informações do Animal</ModalInfoAnimal>
-              <ModalHealthyHistoricAnimal>Histórico de Saúde</ModalHealthyHistoricAnimal>
+              <q-btn flat class="text-weight-light" style="color: #fff !important" icon="fa fa-paw"
+                label="Informações do Animal" @click="openModalInfoAnimal" />
+              <q-btn flat class="text-weight-light" style="color: #fff !important" label="Histórico de Saúde"
+                icon="bi-clipboard2-pulse" @click="openModalHealthHistory(animal)" />
             </q-card-actions>
           </q-card>
         </div>
       </div>
     </div>
+
+    <q-dialog v-model="modalHealthHistory" persistent>
+      <q-card style="width: 75%;" flat bp>
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6">{{ nameAnimal }}</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+        <q-card-section>
+          <q-card>
+            <q-tabs v-model="tab" dense class="text-grey" active-color="primary" indicator-color="primary" align="justify"
+              narrow-indicator>
+              <q-tab name="events" label="Events" />
+              <q-tab name="vaccine" label="Vaccine" />
+              <q-tab name="movies" label="Movies" />
+            </q-tabs>
+
+            <q-separator />
+
+            <q-tab-panels v-model="tab" animated>
+              <q-tab-panel name="events">
+                <div class="text-h6">New Event</div>
+                <q-input v-model="event_date" label="Data do Evento" type="date" class="q-my-md" dense></q-input>
+                <q-select label="Tipo de Evento" v-model="fk_event_type" :options="eventOptions" dense></q-select>
+                <q-input label="Descrição ou Nome da Vacina/Vermífugo" v-model="description" type="textarea" rows="4"
+                  dense></q-input>
+                <q-card-actions align="right">
+                  <q-btn flat color="secondary" label="Salvar" @click="createEvent()"></q-btn>
+                </q-card-actions>
+              </q-tab-panel>
+
+              <q-tab-panel name="vaccine">
+                <div class="text-h6">Vaccine</div>
+                <div class="q-pa-md">
+                  <q-table flat :rows="rows" :columns="columns" row-key="name" :separator="separator" selection="multiple"
+                    v-model:selected="selectedItems" />
+                  <q-card-actions align="right">
+                    <q-btn flat color="secondary" label="Editar" @click="editItem"
+                      :disable="selectedItems.length !== 1"></q-btn>
+                    <q-btn flat color="red-5" label="Excluir" @click="deleteItems"
+                      :disable="selectedItems.length === 0"></q-btn>
+                  </q-card-actions>
+                </div>
+              </q-tab-panel>
+
+              <q-tab-panel name="movies">
+                <div class="text-h6">Movies</div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </q-tab-panel>
+            </q-tab-panels>
+          </q-card>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
   </div>
 </template>
 
 <script>
 import io from 'socket.io-client';
 import axios from 'axios';
+import { ref } from 'vue'
+import moment from 'moment';
 import ModalInfoAnimal from './ModalInfoAnimal.vue';
 import ModalHealthyHistoricAnimal from './ModalHealthyHistoricAnimal.vue';
 
+const columns = [
+  { name: 'vaccine', required: true, label: 'Nome da Vacina', align: 'left', field: 'vaccine', sortable: true },
+  { name: 'weight', required: true, label: 'Peso', align: 'left', field: 'weight', sortable: true },
+  { name: 'date', required: true, label: 'Data de Aplicação', align: 'left', field: 'date', sortable: true },
+]
+const rows = [
+  { vaccine: 'Vacina 1' }
+]
 export default {
   components: {
-    ModalInfoAnimal,
-    ModalHealthyHistoricAnimal,
+    // ModalInfoAnimal,
+    // ModalHealthyHistoricAnimal,
   },
-
+  setup() {
+    return {
+      tab: ref('events'),
+      event_date: moment().format('YYYY-MM-DD'),
+      description: ref(""),
+      fk_event_type: ref(""),
+      eventOptions: [
+        { label: "Vacina", value: 1 },
+        { label: "Vermífugo", value: 2 },
+        { label: "Cirurgia", value: 3 },
+        { label: "Outros", value: 4 },
+      ]
+    }
+  },
   data() {
     return {
       listAnimals: [],
       socket: null,
+      modalHealthHistory: false,
+      separator: 'horizontal',
+      fk_animal: null,
+      nameAnimal: null,
+      selectedItems: []
+
     };
   },
 
@@ -101,6 +187,66 @@ export default {
         .then((response) => {
           console.log(JSON.stringify(response.data));
           this.listAnimals = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    openModalHealthHistory(animal) {
+      this.fk_animal = animal.id;
+      this.nameAnimal = animal.name;
+      this.modalHealthHistory = true;
+      this.getHealthHistory();
+    },
+    createEvent() {
+      let data = JSON.stringify({
+        "event_date": moment(this.event_date).format('YYYY-MM-DD'),
+        "description": this.description,
+        "fk_event_type": this.fk_event_type.value,
+        "fk_animal": this.fk_animal
+      });
+
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'http://localhost:3352/health_history',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: data
+      };
+
+      axios.request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+          this.event_date = moment().format('YYYY-MM-DD');
+          this.description = "";
+          this.fk_event_type = "";
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+    },
+    getHealthHistory() {
+      let data = '';
+
+      let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'http://localhost:3352/health_history/getAnimal/' + this.fk_animal,
+        headers: {
+          token: localStorage.getItem('token'),
+        },
+        data: data,
+      };
+
+      axios
+        .request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+          this.rows = response.data;
+
         })
         .catch((error) => {
           console.log(error);

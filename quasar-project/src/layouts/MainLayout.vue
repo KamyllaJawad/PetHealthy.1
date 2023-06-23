@@ -66,6 +66,16 @@ export default {
     setToken(token) {
       this.token = token;
     },
+    getHistory() {
+      axios
+        .get("http://localhost:3000/animals/1/healthy-historic")
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   components: {
     LoginUser,
@@ -80,9 +90,5 @@ export default {
 </script>
 
 <style>
-.main-layout {
-  background-image: url('assets/backgorund-singuplogin.jpeg');
-  background-size: cover;
-  background-position: center;
-}
+
 </style>

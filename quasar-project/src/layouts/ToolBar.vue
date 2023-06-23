@@ -4,7 +4,7 @@
 
 
       <div class="q-gutter-sm">
-          <q-icon color="cyan-2" size="md" name="cruelty_free"  />
+         <q-icon color="cyan-2" size="md" name="cruelty_free"  />
       </div>
       <span class="q-ml-xs text-large">Meus Pets</span>
       <q-space />

@@ -1,45 +1,46 @@
 <template>
-  <div>
-    <q-form @submit="saveForm" class="q-gutter-md">
-      <q-input label="Nome da Vacina" v-model="vaccineName" dense></q-input>
-      <q-input v-model="vaccineDate" for="vaccine-date" label="Data de Aplicação da Vacina" type="date" class="q-my-md" mask="date" :rules="['date']" id="vaccine-date" dense></q-input>
-
-      <q-card-actions align="right">
-        <q-btn flat color="red-5" label="Cancelar" @click="cancelForm"></q-btn>
-        <q-btn flat color="secondary" label="Salvar" type="submit"></q-btn>
-      </q-card-actions>
-    </q-form>
+  <div class="q-pa-md">
+    <q-table
+    flat
+    :rows="rows"
+    :columns="columns"
+    row-key="name"
+    :separator="separator"
+    selection="multiple"
+    v-model:selected="selectedItems"
+  />
+    <q-card-actions align="right">
+      <q-btn flat color="secondary" label="Editar" @click="editItem" :disable="selectedItems.length !== 1"></q-btn>
+      <q-btn flat color="red-5" label="Excluir" @click="deleteItems" :disable="selectedItems.length === 0"></q-btn>
+    </q-card-actions>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
-
 export default {
-  setup() {
-    const vaccineName = ref("");
-    const vaccineDate = ref(null);
-
-    function saveForm() {
-      const formData = {
-        vaccineName: vaccineName.value,
-        vaccineDate: vaccineDate.value,
-      };
-
-      // Aqui você pode fazer uma requisição ao backend para salvar os dados
-      console.log(formData);
-    }
-
-    function cancelForm() {
-      // Lógica para cancelar o formulário, se necessário
-    }
-
+  data() {
     return {
-      vaccineName,
-      vaccineDate,
-      saveForm,
-      cancelForm,
+      separator: 'horizontal',
+      rows: [], // Dados da tabela
+      columns: [ // Colunas da tabela
+        { name: 'vaccine', required: true, label: 'Nome da Vacina', align: 'left', field: 'vaccine', sortable: true },
+        { name: 'weight', required: true, label: 'Peso', align: 'left', field: 'weight', sortable: true },
+        { name: 'date', required: true, label: 'Data de Aplicação', align: 'left', field: 'date', sortable: true },
+      ],
+      selectedItems: [], // Itens selecionados na tabela
     };
+  },
+  methods: {
+    editItem() {
+      // Lógica para editar o item selecionado
+      const selectedItem = this.selectedItems[0]; // Pega o primeiro item selecionado (assumindo que apenas um item pode ser editado)
+      // Faça o que for necessário para editar o item
+    },
+    deleteItems() {
+      // Lógica para excluir os itens selecionados
+      // Faça o que for necessário para excluir os itens
+      this.selectedItems = []; // Limpa os itens selecionados após a exclusão
+    },
   },
 };
 </script>

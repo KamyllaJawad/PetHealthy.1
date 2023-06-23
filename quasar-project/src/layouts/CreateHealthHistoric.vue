@@ -1,12 +1,12 @@
 <template>
   <div>
-    <q-form @submit="saveForm" class="q-gutter-md"  v-model="modalVisible">
+    <q-form @submit="saveForm" class="q-gutter-md">
       <q-input filled label="Data de Registro" v-model="registration_date" readonly dense></q-input>
       <q-input v-model="event_date" label="Data do Evento" type="date" class="q-my-md" dense></q-input>
       <q-select label="Tipo de Evento" v-model="event_type" :options="eventOptions" dense></q-select>
-      <q-input label="Descrição" v-model="description" type="textarea" rows="4" dense></q-input>
+      <q-input label="Descrição ou Nome da Vacina/Vermífugo" v-model="description" type="textarea" rows="4" dense></q-input>
       <q-card-actions align="right">
-        <q-btn flat color="red-5" label="Fechar" @click="closeModal"></q-btn>
+        <q-btn flat color="red-5" label="Cancelar" @click="clearForm"></q-btn>
         <q-btn flat color="secondary" label="Salvar" @click="saveHealthHistoric"></q-btn>
       </q-card-actions>
     </q-form>
@@ -19,12 +19,38 @@ import { ref } from "vue";
 export default {
 
   methods: {
-    openModal() {
-      this.modalVisible = true;
-      this.saveHealthHistoric();
+    saveHealthHistoric() {
+      const axios = require('axios');
+      let data = JSON.stringify({
+        event_date: this.event_date,
+        description: this.description,
+        fk_event_type: this.eventOptions
+        // fk_animal:
+      });
+
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'http://localhost:3352/health_history',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: data
+      };
+
+      axios.request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
     },
-    closeModal() {
-      this.modalVisible = false;
+    clearForm() {
+      this.event_date = "";
+      this.event_type = "";
+      this.description = "";
     }
   },
 
@@ -35,10 +61,10 @@ export default {
     const event_type = ref("");
 
     const eventOptions = [
-      { label: "Vacina", value: "vacina" },
-      { label: "Vermífugo", value: "vermifugo" },
-      { label: "Cirurgia", value: "cirurgia" },
-      { label: "Outros", value: "outros" },
+      { label: "Vacina", value: 1 },
+      { label: "Vermífugo", value: 2 },
+      { label: "Cirurgia", value: 3 },
+      { label: "Outros", value: 4 },
     ];
 
     function getCurrentDate() {
@@ -54,20 +80,9 @@ export default {
         day = "0" + day;
       }
 
-      return `${year}/${month}/${day}`;
+      return `${day}/${month}/${year}`;
     }
 
-    function saveForm() {
-      const formData = {
-        registration_date: registration_date.value,
-        event_date: event_date.value,
-        description: description.value,
-        event_type: event_type.value,
-      };
-
-      // Aqui você pode fazer uma requisição ao backend para salvar os dados
-      console.log(formData);
-    }
 
     return {
       registration_date,
@@ -75,7 +90,6 @@ export default {
       description,
       event_type,
       eventOptions,
-      saveForm,
     };
   },
 };
