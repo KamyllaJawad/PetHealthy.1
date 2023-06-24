@@ -1,10 +1,18 @@
 const { HealthHistory } = require("../../app/models");
+let io = null
+
+// nao alterar pois dará o seguinte erro: TypeError: Cannot read properties of null (reading 'emit') at module.exports
+setTimeout(() => {
+   io = require('../../app');
+
+},1000)
 
 module.exports = async (req, res) => {
   try {
     const requestData = extractData(req);
     await analyseData(requestData);
     const healthHistory = await createHealthHistory(requestData);
+    io.emit('createHealthHistory', {message: 'Historico Criado!'})
     return res.send(healthHistory)
   } catch (error) {
     console.log(error);

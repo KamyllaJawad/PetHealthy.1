@@ -51,7 +51,9 @@
               narrow-indicator>
               <q-tab name="events" label="Events" />
               <q-tab name="vaccine" label="Vaccine" />
-              <q-tab name="movies" label="Movies" />
+              <q-tab name="deworming" label="Deworming" />
+              <q-tab name="surgery" label="Surgery" />
+              <q-tab name="others" label="Others" />
             </q-tabs>
 
             <q-separator />
@@ -68,24 +70,55 @@
                 </q-card-actions>
               </q-tab-panel>
 
+              //tab de vacinas
               <q-tab-panel name="vaccine">
                 <div class="text-h6">Vaccine</div>
                 <div class="q-pa-md">
-                  <q-table flat :rows="rows" :columns="columns" row-key="name" :separator="separator" selection="multiple"
-                    v-model:selected="selectedItems" />
+                  <q-table flat :rows="rowsVaccine" :columns="columns" row-key="name" :separator="separator" selection="multiple" v-model:selected="selectedItems" />
                   <q-card-actions align="right">
-                    <q-btn flat color="secondary" label="Editar" @click="editItem"
-                      :disable="selectedItems.length !== 1"></q-btn>
-                    <q-btn flat color="red-5" label="Excluir" @click="deleteItems"
-                      :disable="selectedItems.length === 0"></q-btn>
+                    <q-btn flat color="secondary" label="Editar" @click="editItem" :disable="selectedItems.length !== 1"></q-btn>
+                    <q-btn flat color="red-5" label="Excluir" @click="deleteItems" :disable="selectedItems.length === 0"></q-btn>
                   </q-card-actions>
                 </div>
               </q-tab-panel>
 
-              <q-tab-panel name="movies">
-                <div class="text-h6">Movies</div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              //tab de vermifugo
+              <q-tab-panel name="deworming">
+                <div class="text-h6">Deworming</div>
+                <div class="q-pa-md">
+                  <q-table flat :rows="rowsDeworming" :columns="columns" row-key="name" :separator="separator" selection="multiple" v-model:selected="selectedItems" />
+                  <q-card-actions align="right">
+                    <q-btn flat color="secondary" label="Editar" @click="editItem" :disable="selectedItems.length !== 1"></q-btn>
+                    <q-btn flat color="red-5" label="Excluir" @click="deleteItems" :disable="selectedItems.length === 0"></q-btn>
+                  </q-card-actions>
+                </div>
               </q-tab-panel>
+
+              //tab de cirurgia
+              <q-tab-panel name="surgery">
+                <div class="text-h6">Surgery</div>
+                <div class="q-pa-md">
+                  <q-table flat :rows="rowsSurgery" :columns="columns" row-key="name" :separator="separator" selection="multiple" v-model:selected="selectedItems" />
+                  <q-card-actions align="right">
+                    <q-btn flat color="secondary" label="Editar" @click="editItem" :disable="selectedItems.length !== 1"></q-btn>
+                    <q-btn flat color="red-5" label="Excluir" @click="deleteItems" :disable="selectedItems.length === 0"></q-btn>
+                  </q-card-actions>
+                </div>
+              </q-tab-panel>
+
+              //tab de outros
+              <q-tab-panel name="others">
+                <div class="text-h6">Others</div>
+                <div class="q-pa-md">
+                  <q-table flat :rows="rowsOthers" :columns="columns" row-key="name" :separator="separator" selection="multiple" v-model:selected="selectedItems" />
+                  <q-card-actions align="right">
+                    <q-btn flat color="secondary" label="Editar" @click="editItem" :disable="selectedItems.length !== 1"></q-btn>
+                    <q-btn flat color="red-5" label="Excluir" @click="deleteItems" :disable="selectedItems.length === 0"></q-btn>
+                  </q-card-actions>
+                </div>
+              </q-tab-panel>
+
+
             </q-tab-panels>
           </q-card>
         </q-card-section>
@@ -108,10 +141,13 @@ const columns = [
   { name: 'weight', required: true, label: 'Peso', align: 'left', field: 'weight', sortable: true },
   { name: 'date', required: true, label: 'Data de Aplicação', align: 'left', field: 'date', sortable: true },
 ]
-const rows = [
-  { vaccine: 'Vacina 1' }
-]
+const rowsVaccine = []
+const rowsDeworming = []
+const rowsSurgery = []
+const rowsOthers = []
+
 export default {
+
   components: {
     // ModalInfoAnimal,
     // ModalHealthyHistoricAnimal,
@@ -139,10 +175,10 @@ export default {
       fk_animal: null,
       nameAnimal: null,
       selectedItems: []
-
     };
   },
 
+  //-----------recebe evento de criação de novo animal
   created() {
     // Conectar ao servidor Socket.IO
     const socket = io('http://localhost:3352');
@@ -156,8 +192,12 @@ export default {
       console.log('Desconectado do servidor Socket.IO');
     });
 
-    socket.on('createAnimal', (data) => {
+    socket.on('createAnimal', () => {
       this.getAnimals();
+    });
+
+    socket.on('createHealthHistory', () => {
+      this.getHealthHistory();
     });
 
     // Enviar mensagens para o servidor
@@ -169,6 +209,8 @@ export default {
   },
 
   methods: {
+
+
     getAnimals() {
       let data = '';
 
@@ -245,8 +287,18 @@ export default {
         .request(config)
         .then((response) => {
           console.log(JSON.stringify(response.data));
-          this.rows = response.data;
-
+          this.rowsVaccine = response.data.filter((event) => {
+            return event.fk_event_type === 1
+          });
+          this.rowsDeworming = response.data.filter((event) => {
+            return event.fk_event_type === 2
+          });
+          this.rowsSurgery = response.data.filter((event) => {
+            return event.fk_event_type === 3
+          });
+          this.rowsOthers = response.data.filter((event) => {
+            return event.fk_event_type === 4
+          });
         })
         .catch((error) => {
           console.log(error);
