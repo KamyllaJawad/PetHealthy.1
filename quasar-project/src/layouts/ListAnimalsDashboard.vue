@@ -164,6 +164,20 @@
       </q-card>
     </q-dialog>
 
+    <!-- Diálogo de confirmação de exclusão -->
+    <q-dialog v-model="confirmDeleteDialog" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <span class="q-ml-sm">Tem certeza que deseja excluir este animal?</span>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="Cancelar" color="primary" v-close-popup />
+          <q-btn flat label="Excluir" color="negative" @click="executeDeleteAnimal" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+
   </div>
 </template>
 
@@ -207,6 +221,7 @@ export default {
       listAnimals: [],
       socket: null,
       modalHealthHistory: false,
+      confirmDeleteDialog: false,
       separator: 'horizontal',
       fk_animal: null,
       nameAnimal: null,
@@ -229,7 +244,7 @@ export default {
   //-----------recebe evento de criação de novo animal
   created() {
     // Conectar ao servidor Socket.IO
-    const socket = io('http://localhost:3352');
+    const socket = io(process.env.VUE_APP_URL_API);
 
     // Manipular eventos do Socket.IO
     socket.on('connect', () => {
@@ -257,12 +272,16 @@ export default {
   },
 
   methods: {
-
     deleteAnimal() {
+      this.confirmDeleteDialog = true;
+    },
+
+
+    executeDeleteAnimal() {
       let config = {
         method: 'delete',
         maxBodyLength: Infinity,
-        url: `http://localhost:3352/animals/delete_animal/${this.fk_animal}`,
+        url: process.env.VUE_APP_URL_API+`/animals/delete_animal/${this.fk_animal}`,
         headers: {}
       };
 
@@ -274,6 +293,7 @@ export default {
           console.log(error);
         });
 
+      this.confirmDeleteDialog = false;
     },
 
     editedAnimal() {
@@ -291,7 +311,7 @@ export default {
       let config = {
         method: 'put',
         maxBodyLength: Infinity,
-        url: `http://localhost:3352/animals/update/${this.fk_animal}`,
+        url : process.env.VUE_APP_URL_API+`/animals/update/${this.fk_animal}`,
         headers: {
           'token': localStorage.getItem('token'),
           'Content-Type': 'application/json'
@@ -316,7 +336,7 @@ export default {
       let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: `http://localhost:3352/animals/retrieveByAnimal?id=${this.fk_animal}`,
+        url: process.env.VUE_APP_URL_API+`/animals/retrieveByAnimal?id=${this.fk_animal}`,
         headers: {}
       };
 
@@ -337,7 +357,7 @@ export default {
       let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: 'http://localhost:3352/animals/retrieve',
+        url: process.env.VUE_APP_URL_API+"animals/retrieve",
         headers: {
           token: localStorage.getItem('token'),
         },
@@ -378,7 +398,7 @@ export default {
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'http://localhost:3352/health_history',
+        url: process.env.VUE_APP_URL_API+"health_history",
         headers: {
           'Content-Type': 'application/json'
         },
@@ -403,7 +423,7 @@ export default {
       let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: 'http://localhost:3352/health_history/getAnimal/' + this.fk_animal,
+        url: process.env.VUE_APP_URL_API+"health_history/getAnimal/"+ this.fk_animal,
         headers: {
           token: localStorage.getItem('token'),
         },

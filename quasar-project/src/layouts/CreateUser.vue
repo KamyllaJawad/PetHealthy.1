@@ -92,10 +92,11 @@ export default {
         birthdate: this.birthdate,
       });
 
+
       let config = {
         method: "post",
         maxBodyLength: Infinity,
-        url: process.env.baseurl_api+"users",
+        url: process.env.VUE_APP_URL_API+"users",
         headers: {
           "Content-Type": "application/json",
         },

@@ -59,7 +59,7 @@ export default {
       let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: 'http://localhost:3352/animals/retrieve',
+        url: process.env.VUE_APP_URL_API+"animals/retrieve",
         headers: {
           token: localStorage.getItem('token'),
         },

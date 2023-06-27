@@ -14,15 +14,8 @@ module.exports = async (req, res) => {
 }
 
 function extractData(request) {
-
-
     const { id } = request.query
     return { id }
-
-    // let idUser = jwt.verify(request.headers.token, process.env.KEYJWT);
-    // idUser = idUser.id
-    // const { name, age, weight, breed, coat_color, size, species, reg_ibama } = request.body
-    // return { name, age, weight, breed, coat_color, size, species, reg_ibama, idUser }
 }
 
 async function findAnimal(request) {

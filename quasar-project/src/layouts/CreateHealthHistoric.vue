@@ -31,7 +31,7 @@ export default {
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'http://localhost:3352/health_history',
+        url: process.env.VUE_APP_URL_API+"health_history",
         headers: {
           'Content-Type': 'application/json'
         },

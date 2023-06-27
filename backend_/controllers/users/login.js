@@ -40,7 +40,6 @@ async function findUser(dataRequest) {
     if (user){
       token = jwt.sign(user, process.env.KEYJWT)
     }
-    console.log(token)
     return token
   } catch (error) {
     console.log(error);
