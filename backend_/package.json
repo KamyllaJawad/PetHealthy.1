@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "Fullstack Application",
   "scripts": {
-    "start": "node index.js",
+    "start": "node app.js",
     "backend": "cd backend_ && npm install && npm start",
     "frontend": "cd quasar-project && npm install && quasar dev",
     "pipeline": "npm run backend && npm run frontend"
+    // "test": "jest"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
