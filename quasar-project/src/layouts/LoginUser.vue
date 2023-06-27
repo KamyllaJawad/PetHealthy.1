@@ -50,9 +50,6 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-
-      // Aqui você pode fazer uma chamada de API para autenticar o usuário
-      // usando os valores dos campos "login" e "password"
     },
 
     setToken(token) {

@@ -47,8 +47,6 @@ import ModalInfoAnimal from './ModalInfoAnimal.vue';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 
-
-
 export default {
   setup() {
     return {
@@ -64,12 +62,22 @@ export default {
     setToken(token) {
       this.token = token;
     },
+    getHistory() {
+      axios
+        .get(VUE_APP_URL_API+"animals/1/healthy-historic")
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
     components: {
       LoginUser,
       CreateUser,
       PetDashboard,
     },
-  },
 };
 </script>
 
