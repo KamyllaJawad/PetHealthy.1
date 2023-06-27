@@ -7,7 +7,8 @@
         <q-card class="my-card absolute-center q-ma-md" v-if="!token">
           <q-card-section>
             <div class="text-h6 text-weight-light ">Bem vindo ao PetHealthy</div>
-            <div class="text-subtitle2 text-weight-light">Pra você a manter as informações de saúde do seu animalzinho </div>
+            <div class="text-subtitle2 text-weight-light">Pra você a manter as informações de saúde do seu animalzinho
+            </div>
             <div class="text-subtitle2 text-weight-light">de estimação de forma organizada, segura e acessível.</div>
           </q-card-section>
 
@@ -40,12 +41,9 @@
 import { ref } from "vue";
 import LoginUser from "./LoginUser.vue";
 import CreateUser from "./CreateUser.vue";
-import ToolBar from "./ToolBar.vue";
-import FooterPage from "./FooterPage.vue";
 import PetDashboard from "./PetDashboard.vue";
 import CreateAnimal from "./PetDashboard.vue";
 import ModalInfoAnimal from './ModalInfoAnimal.vue';
-
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 
@@ -66,14 +64,12 @@ export default {
     setToken(token) {
       this.token = token;
     },
-  components: {
-    LoginUser,
-    CreateUser,
-    PetDashboard,
+    components: {
+      LoginUser,
+      CreateUser,
+      PetDashboard,
+    },
   },
 };
 </script>
 
-<style>
-
-</style>
