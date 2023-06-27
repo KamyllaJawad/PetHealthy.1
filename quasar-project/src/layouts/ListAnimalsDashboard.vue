@@ -29,7 +29,7 @@
             <q-separator dark inset />
             <q-card-actions class="justify-center text-weight-light">
               <q-btn flat class="text-weight-light" style="color: #fff !important" icon="fa fa-paw"
-                label="Informações do Animal" @click="openModalInfoAnimal" />
+                label="Informações do Animal" @click="openModalInfoAnimal(animal)" />
               <q-btn flat class="text-weight-light" style="color: #fff !important" label="Histórico de Saúde"
                 icon="bi-clipboard2-pulse" @click="openModalHealthHistory(animal)" />
             </q-card-actions>
@@ -38,10 +38,11 @@
       </div>
     </div>
 
+    <!-- //-----------------------MODAL DE HISTORICO DE SAÚDE -->
     <q-dialog v-model="modalHealthHistory" persistent>
       <q-card style="width: 75%;" flat bp>
-        <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6">{{ nameAnimal }}</div>
+        <q-card-section class="row items-center q-pb-none text-weight-thin">
+          <div class="text-weight-thin text-h6">{{ nameAnimal }}</div>
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
@@ -60,7 +61,7 @@
 
             <q-tab-panels v-model="tab" animated>
               <q-tab-panel name="events">
-                <div class="text-h6">New Event</div>
+                <div class="text-weight-thin text-h6">New Event</div>
                 <q-input v-model="event_date" label="Data do Evento" type="date" class="q-my-md" dense></q-input>
                 <q-select label="Tipo de Evento" v-model="fk_event_type" :options="eventOptions" dense></q-select>
                 <q-input label="Descrição ou Nome da Vacina/Vermífugo" v-model="description" type="textarea" rows="4"
@@ -72,56 +73,94 @@
 
               //tab de vacinas
               <q-tab-panel name="vaccine">
-                <div class="text-h6">Vaccine</div>
+                <div class="text-weight-thin text-h6">Vaccine</div>
                 <div class="q-pa-md">
-                  <q-table flat :rows="rowsVaccine" :columns="columns" row-key="name" :separator="separator" selection="multiple" v-model:selected="selectedItems" />
+                  <q-table flat :rows="rowsVaccine" :columns="columns" row-key="name" :separator="separator"
+                    selection="multiple" v-model:selected="selectedItems" class="text-weight-thin" />
                   <q-card-actions align="right">
-                    <q-btn flat color="secondary" label="Editar" @click="editItem" :disable="selectedItems.length !== 1"></q-btn>
-                    <q-btn flat color="red-5" label="Excluir" @click="deleteItems" :disable="selectedItems.length === 0"></q-btn>
+                    <q-btn flat color="secondary" label="Editar" @click="editItem"
+                      :disable="selectedItems.length !== 1"></q-btn>
+                    <q-btn flat color="red-5" label="Excluir" @click="deleteItems"
+                      :disable="selectedItems.length === 0"></q-btn>
                   </q-card-actions>
                 </div>
               </q-tab-panel>
 
               //tab de vermifugo
               <q-tab-panel name="deworming">
-                <div class="text-h6">Deworming</div>
+                <div class="text-weight-thin text-h6">Deworming</div>
                 <div class="q-pa-md">
-                  <q-table flat :rows="rowsDeworming" :columns="columns" row-key="name" :separator="separator" selection="multiple" v-model:selected="selectedItems" />
+                  <q-table flat :rows="rowsDeworming" :columns="columns" row-key="name" :separator="separator"
+                    selection="multiple" v-model:selected="selectedItems" class="text-weight-thin" />
                   <q-card-actions align="right">
-                    <q-btn flat color="secondary" label="Editar" @click="editItem" :disable="selectedItems.length !== 1"></q-btn>
-                    <q-btn flat color="red-5" label="Excluir" @click="deleteItems" :disable="selectedItems.length === 0"></q-btn>
+                    <q-btn flat color="secondary" label="Editar" @click="editItem"
+                      :disable="selectedItems.length !== 1"></q-btn>
+                    <q-btn flat color="red-5" label="Excluir" @click="deleteItems"
+                      :disable="selectedItems.length === 0"></q-btn>
                   </q-card-actions>
                 </div>
               </q-tab-panel>
 
               //tab de cirurgia
               <q-tab-panel name="surgery">
-                <div class="text-h6">Surgery</div>
+                <div class="text-weight-thin text-h6">Surgery</div>
                 <div class="q-pa-md">
-                  <q-table flat :rows="rowsSurgery" :columns="columns" row-key="name" :separator="separator" selection="multiple" v-model:selected="selectedItems" />
+                  <q-table flat :rows="rowsSurgery" :columns="columns" row-key="name" :separator="separator"
+                    selection="multiple" v-model:selected="selectedItems" class="text-weight-thin" />
                   <q-card-actions align="right">
-                    <q-btn flat color="secondary" label="Editar" @click="editItem" :disable="selectedItems.length !== 1"></q-btn>
-                    <q-btn flat color="red-5" label="Excluir" @click="deleteItems" :disable="selectedItems.length === 0"></q-btn>
+                    <q-btn flat color="secondary" label="Editar" @click="editItem"
+                      :disable="selectedItems.length !== 1"></q-btn>
+                    <q-btn flat color="red-5" label="Excluir" @click="deleteItems"
+                      :disable="selectedItems.length === 0"></q-btn>
                   </q-card-actions>
                 </div>
               </q-tab-panel>
 
               //tab de outros
               <q-tab-panel name="others">
-                <div class="text-h6">Others</div>
+                <div class="text-weight-thin text-h6">Others</div>
                 <div class="q-pa-md">
-                  <q-table flat :rows="rowsOthers" :columns="columns" row-key="name" :separator="separator" selection="multiple" v-model:selected="selectedItems" />
+                  <q-table flat :rows="rowsOthers" :columns="columns" row-key="name" :separator="separator"
+                    selection="multiple" v-model:selected="selectedItems" class="text-weight-thin" />
                   <q-card-actions align="right">
-                    <q-btn flat color="secondary" label="Editar" @click="editItem" :disable="selectedItems.length !== 1"></q-btn>
-                    <q-btn flat color="red-5" label="Excluir" @click="deleteItems" :disable="selectedItems.length === 0"></q-btn>
+                    <q-btn flat color="secondary" label="Editar" @click="editItem"
+                      :disable="selectedItems.length !== 1"></q-btn>
+                    <q-btn flat color="red-5" label="Excluir" @click="deleteItems"
+                      :disable="selectedItems.length === 0"></q-btn>
                   </q-card-actions>
                 </div>
               </q-tab-panel>
 
-
             </q-tab-panels>
           </q-card>
         </q-card-section>
+      </q-card>
+    </q-dialog>
+
+    <!-- //------------------------------MODAL DE INFORMAÇÃO DO ANIMAL PARA EDITAR E EXCLUIR -->
+    <q-dialog v-model="modalInfoAnimal">
+
+      <q-card class="q-pa-sm fit">
+        <q-card-section>
+          <div class="text-h6 text-weight-thin" style="text-align: center;">Informações do Animal</div>
+        </q-card-section>
+        <q-separator secondary inset />
+
+        <q-card-section>
+          <q-input class="q-my-auto" color="light-blue-3" v-model="infoAnimal.name" label="Nome"></q-input>
+          <q-input class="q-my-auto" color="light-blue-3" v-model="infoAnimal.species" label="Espécie"></q-input>
+          <q-input class="q-my-auto" color="light-blue-3" v-model="infoAnimal.breed" label="Raça"></q-input>
+          <q-input class="q-my-auto" color="light-blue-3" v-model="infoAnimal.age" label="Idade"></q-input>
+          <q-input class="q-my-auto" color="light-blue-3" v-model="infoAnimal.weight" label="Peso"></q-input>
+          <q-input class="q-my-auto" color="light-blue-3" v-model="infoAnimal.coat_color" label="Cor do Pelo"></q-input>
+          <q-input class="q-my-auto" color="light-blue-3" v-model="infoAnimal.size" label="Tamanho"></q-input>
+          <q-input class="q-my-auto" color="light-blue-3" v-model="infoAnimal.reg_ibama" label="Registro Ibama"></q-input>
+
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat color="red-5" label="Excluir Animal" @click="deleteAnimal()"></q-btn>
+          <q-btn flat color="secondary" label="Salvar" @click="editedAnimal()"></q-btn>
+        </q-card-actions>
       </q-card>
     </q-dialog>
 
@@ -133,8 +172,6 @@ import io from 'socket.io-client';
 import axios from 'axios';
 import { ref } from 'vue'
 import moment from 'moment';
-import ModalInfoAnimal from './ModalInfoAnimal.vue';
-import ModalHealthyHistoricAnimal from './ModalHealthyHistoricAnimal.vue';
 
 const columns = [
   { name: 'vaccine', required: true, label: 'Nome da Vacina', align: 'left', field: 'vaccine', sortable: true },
@@ -149,7 +186,6 @@ const rowsOthers = []
 export default {
 
   components: {
-    // ModalInfoAnimal,
     // ModalHealthyHistoricAnimal,
   },
   setup() {
@@ -174,7 +210,19 @@ export default {
       separator: 'horizontal',
       fk_animal: null,
       nameAnimal: null,
-      selectedItems: []
+      selectedItems: [],
+      modalInfoAnimal: false,
+      selectedAnimal: null,
+      infoAnimal: {
+        name: '',
+        species: '',
+        breed: '',
+        age: '',
+        weight: '',
+        coat_color: '',
+        size: '',
+        reg_ibama: '',
+      },
     };
   },
 
@@ -210,6 +258,78 @@ export default {
 
   methods: {
 
+    deleteAnimal() {
+      let config = {
+        method: 'delete',
+        maxBodyLength: Infinity,
+        url: `http://localhost:3352/animals/delete_animal/${this.fk_animal}`,
+        headers: {}
+      };
+
+      axios.request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+    },
+
+    editedAnimal() {
+      let data = JSON.stringify({
+        "name": this.infoAnimal.name,
+        "age": this.infoAnimal.age,
+        "weight": this.infoAnimal.weight,
+        "breed": this.infoAnimal.breed,
+        "coat_color": this.infoAnimal.coat_color,
+        "size": this.infoAnimal.size,
+        "species": this.infoAnimal.species,
+        "reg_ibama": this.infoAnimal.reg_ibama
+      });
+
+      let config = {
+        method: 'put',
+        maxBodyLength: Infinity,
+        url: `http://localhost:3352/animals/update/${this.fk_animal}`,
+        headers: {
+          'token': localStorage.getItem('token'),
+          'Content-Type': 'application/json'
+        },
+        data: data
+      };
+
+      axios.request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+    },
+
+
+
+    getAnimal() {
+
+      let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: `http://localhost:3352/animals/retrieveByAnimal?id=${this.fk_animal}`,
+        headers: {}
+      };
+
+      axios.request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+          this.infoAnimal = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+    },
 
     getAnimals() {
       let data = '';
@@ -239,6 +359,13 @@ export default {
       this.nameAnimal = animal.name;
       this.modalHealthHistory = true;
       this.getHealthHistory();
+    },
+    openModalInfoAnimal(animal) {
+      this.fk_animal = animal.id;
+      this.nameAnimal = animal.name;
+      this.selectedAnimal = animal;
+      this.modalInfoAnimal = true;
+      this.getAnimal();
     },
     createEvent() {
       let data = JSON.stringify({
@@ -289,20 +416,36 @@ export default {
           console.log(JSON.stringify(response.data));
           this.rowsVaccine = response.data.filter((event) => {
             return event.fk_event_type === 1
+          }).map((event) => {
+            const { id, fk_animal, fk_event_type, updatedAt, createdAt, ...eventWithoutCertainFields } = event;
+            return eventWithoutCertainFields;
           });
+
           this.rowsDeworming = response.data.filter((event) => {
             return event.fk_event_type === 2
+          }).map((event) => {
+            const { id, fk_animal, fk_event_type, updatedAt, createdAt, ...eventWithoutCertainFields } = event;
+            return eventWithoutCertainFields;
           });
+
           this.rowsSurgery = response.data.filter((event) => {
             return event.fk_event_type === 3
+          }).map((event) => {
+            const { id, fk_animal, fk_event_type, updatedAt, createdAt, ...eventWithoutCertainFields } = event;
+            return eventWithoutCertainFields;
           });
+
           this.rowsOthers = response.data.filter((event) => {
             return event.fk_event_type === 4
+          }).map((event) => {
+            const { id, fk_animal, fk_event_type, updatedAt, createdAt, ...eventWithoutCertainFields } = event;
+            return eventWithoutCertainFields;
           });
         })
         .catch((error) => {
           console.log(error);
         });
+
     },
   },
 };

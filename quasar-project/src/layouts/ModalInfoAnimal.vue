@@ -49,6 +49,9 @@ export default {
       this.getAnimalData();
 
     },
+    confirmDeleteAnimal() {
+    this.confirmDeleteDialog = true;
+  },
     getAnimalData(){
       const axios = require('axios');
       let data = '';

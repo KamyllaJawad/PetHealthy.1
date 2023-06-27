@@ -80,11 +80,7 @@ export default {
   components: {
     LoginUser,
     CreateUser,
-    // ToolBar,
-    // FooterPage,
     PetDashboard,
-    // CreateAnimal,
-    // ModalAnimal
   },
 };
 </script>

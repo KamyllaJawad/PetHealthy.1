@@ -1,5 +1,5 @@
 const create = require("../controllers/animals/create")
-// const retrieve = require("../controllers/animals/retrieveByAnimal")
+const retrieveByAnimal = require("../controllers/animals/retrieveByAnimal")
 const retrieve = require("../controllers/animals/retrieve")
 const update = require("../controllers/animals/update")
 const delete_animal = require("../controllers/animals/delete_animal")
@@ -10,10 +10,10 @@ const express = require('express')
 var router = express.Router();
 
 router.post("/", create)
-// router.get("/retrieveByanimal", retrieve)
+router.get("/retrieveByanimal", retrieveByAnimal)
 router.get("/retrieve", retrieve)
-router.put("/update", update)
-router.delete("/delete_animal", delete_animal)
+router.put('/update/:id', update);
+router.delete("/delete_animal/:id", delete_animal)
 router.get("/retrieve_event_type", retrieve_event_type)
 
 module.exports = router

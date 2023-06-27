@@ -1,38 +1,24 @@
-const { User } = require('../../app/models')
+const { User } = require('../../app/models');
 const jwt = require('jsonwebtoken');
 
 module.exports = async (req, res) => {
-    try {
-    const dataRequest = extractData(req);
-    await validationUser(dataRequest);
-    const user = await deleteUser(dataRequest);
-    res.sendStatus(200)
-    } catch (error) {
-      console.log(error);
-      return res.send(error);
+  try {
+    const token = req.headers.token;
+    if (!token) {
+      throw new Error('Token é obrigatório');
     }
-  };
-  
-  function extractData(request) {
-    const { login } = request.body;
-    return { login };
-  }
-  
-  async function validationUser(dataRequest) {
-    if (!dataRequest.login) {
-      throw new Error("Usuário não existe!");
-    }
-  }
 
-  async function deleteUser(dataRequest) {
-    try {
-        return await User.destroy({
-            where: {
-              login: dataRequest.login
-            }
-          });
-    } catch (error) {
-        console.log(error)
-        throw new Error(error)   
+    let decoded = jwt.verify(token, process.env.KEYJWT);
+    const user = await User.findOne({ where: { id: decoded.id }});
+    if (!user) {
+      throw new Error('Usuário não encontrado');
     }
-}
+
+    await User.destroy({ where: { id: decoded.id }});
+
+    return res.send({ message: `Usuário ${user.login} foi deletado com sucesso` });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ error: error.message });
+  }
+};
