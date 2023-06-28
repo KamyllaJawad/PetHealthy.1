@@ -164,7 +164,7 @@
       </q-card>
     </q-dialog>
 
-    <!-- Diálogo de confirmação de exclusão -->
+    <!-- Diálogo de confirmação de exclusão de animal-->
     <q-dialog v-model="confirmDeleteDialog" persistent>
       <q-card>
         <q-card-section class="row items-center">
@@ -281,7 +281,7 @@ export default {
       let config = {
         method: 'delete',
         maxBodyLength: Infinity,
-        url: process.env.VUE_APP_URL_API+`/animals/delete_animal/${this.fk_animal}`,
+        url: process.env.VUE_APP_URL_API+`animals/delete_animal/${this.fk_animal}`,
         headers: {}
       };
 
@@ -311,7 +311,7 @@ export default {
       let config = {
         method: 'put',
         maxBodyLength: Infinity,
-        url : process.env.VUE_APP_URL_API+`/animals/update/${this.fk_animal}`,
+        url : process.env.VUE_APP_URL_API+`animals/update/${this.fk_animal}`,
         headers: {
           'token': localStorage.getItem('token'),
           'Content-Type': 'application/json'
@@ -336,7 +336,7 @@ export default {
       let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: process.env.VUE_APP_URL_API+`/animals/retrieveByAnimal?id=${this.fk_animal}`,
+        url: process.env.VUE_APP_URL_API+`animals/retrieveByAnimal?id=${this.fk_animal}`,
         headers: {}
       };
 
@@ -381,6 +381,7 @@ export default {
       this.getHealthHistory();
     },
     openModalInfoAnimal(animal) {
+
       this.fk_animal = animal.id;
       this.nameAnimal = animal.name;
       this.selectedAnimal = animal;
@@ -468,5 +469,6 @@ export default {
 
     },
   },
+
 };
 </script>
