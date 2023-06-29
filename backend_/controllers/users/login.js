@@ -37,8 +37,11 @@ async function findUser(dataRequest) {
       },
     });
     let token = null
+
     if (user){
-      token = jwt.sign(user, process.env.KEYJWT)
+      const options = {expiresIn: '1h'}
+      token = jwt.sign(user, process.env.KEYJWT, options)
+
     }
     return token
   } catch (error) {
