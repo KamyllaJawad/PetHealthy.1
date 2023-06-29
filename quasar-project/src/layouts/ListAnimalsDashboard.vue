@@ -50,18 +50,17 @@
           <q-card>
             <q-tabs v-model="tab" dense class="text-grey" active-color="primary" indicator-color="primary" align="justify"
               narrow-indicator>
-              <q-tab name="events" label="Events" />
-              <q-tab name="vaccine" label="Vaccine" />
-              <q-tab name="deworming" label="Deworming" />
-              <q-tab name="surgery" label="Surgery" />
-              <q-tab name="others" label="Others" />
+              <q-tab name="events" label="Novo Registro" />
+              <q-tab name="vaccine" label="Vacina" />
+              <q-tab name="deworming" label="Vermífugo" />
+              <q-tab name="surgery" label="Cirurgia" />
+              <q-tab name="others" label="Outros" />
             </q-tabs>
 
             <q-separator />
 
             <q-tab-panels v-model="tab" animated>
               <q-tab-panel name="events">
-                <div class="text-weight-thin text-h6">New Event</div>
                 <q-input v-model="event_date" label="Data do Evento" type="date" class="q-my-md" dense></q-input>
                 <q-select label="Tipo de Evento" v-model="fk_event_type" :options="eventOptions" dense></q-select>
                 <q-input label="Descrição ou Nome da Vacina/Vermífugo" v-model="description" type="textarea" rows="4"
@@ -73,7 +72,6 @@
 
               //tab de vacinas
               <q-tab-panel name="vaccine">
-                <div class="text-weight-thin text-h6">Vaccine</div>
                 <div class="q-pa-md">
                   <q-table flat :rows="rowsVaccine" :columns="columns" row-key="name" :separator="separator"
                     selection="multiple" v-model:selected="selectedItems" class="text-weight-thin" />
@@ -88,7 +86,6 @@
 
               //tab de vermifugo
               <q-tab-panel name="deworming">
-                <div class="text-weight-thin text-h6">Deworming</div>
                 <div class="q-pa-md">
                   <q-table flat :rows="rowsDeworming" :columns="columns" row-key="name" :separator="separator"
                     selection="multiple" v-model:selected="selectedItems" class="text-weight-thin" />
@@ -103,7 +100,6 @@
 
               //tab de cirurgia
               <q-tab-panel name="surgery">
-                <div class="text-weight-thin text-h6">Surgery</div>
                 <div class="q-pa-md">
                   <q-table flat :rows="rowsSurgery" :columns="columns" row-key="name" :separator="separator"
                     selection="multiple" v-model:selected="selectedItems" class="text-weight-thin" />
@@ -118,7 +114,7 @@
 
               //tab de outros
               <q-tab-panel name="others">
-                <div class="text-weight-thin text-h6">Others</div>
+                <div class="text-weight-thin text-h6">Outros</div>
                 <div class="q-pa-md">
                   <q-table flat :rows="rowsOthers" :columns="columns" row-key="name" :separator="separator"
                     selection="multiple" v-model:selected="selectedItems" class="text-weight-thin" />
@@ -172,7 +168,7 @@
         </q-card-section>
         <q-card-actions align="right">
           <q-btn flat label="Cancelar" color="primary" v-close-popup />
-          <q-btn flat label="Excluir" color="negative" @click="executeDeleteAnimal" />
+          <q-btn flat label="Excluir" color="negative" @click="executeDeleteAnimal" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -200,9 +196,9 @@ const rowsOthers = []
 export default {
 
   components: {
-    // ModalHealthyHistoricAnimal,
   },
   setup() {
+    const selected = ref([])
     return {
       tab: ref('events'),
       event_date: moment().format('YYYY-MM-DD'),
@@ -241,7 +237,7 @@ export default {
     };
   },
 
-  //-----------recebe evento de criação de novo animal
+  //-----------emissão de eventos para reactividade de página
   created() {
     // Conectar ao servidor Socket.IO
     const socket = io(process.env.VUE_APP_URL_API);
@@ -258,6 +254,17 @@ export default {
     socket.on('createAnimal', () => {
       this.getAnimals();
     });
+    socket.on('updateAnimal', () => {
+      this.getAnimals();
+    });
+
+    socket.on('deleteAnimal', () => {
+      this.getAnimals();
+    });
+
+    socket.on('deleteHealthHistory', () => {
+      this.getHealthHistory();
+    });
 
     socket.on('createHealthHistory', () => {
       this.getHealthHistory();
@@ -272,17 +279,49 @@ export default {
   },
 
   methods: {
+
+    //-----------deletar registro no historico de saúde
+
+    deleteHealth_History() {
+
+      let config = {
+        method: 'delete',
+        maxBodyLength: Infinity,
+        url: process.env.VUE_APP_URL_API + `health_history/delete_historic/${this.id}`,
+        headers: {
+          'token': localStorage.getItem('token'),
+          'Content-Type': 'application/json'
+        },
+      };
+
+      axios.request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+    },
+
+
+
+    //-----------chama modal de confirmação de delete de animal
     deleteAnimal() {
       this.confirmDeleteDialog = true;
     },
 
-
+    //-----------deleta animal
     executeDeleteAnimal() {
+      this.modalInfoAnimal = false
       let config = {
         method: 'delete',
         maxBodyLength: Infinity,
-        url: process.env.VUE_APP_URL_API+`animals/delete_animal/${this.fk_animal}`,
-        headers: {}
+        url: process.env.VUE_APP_URL_API + `animals/delete_animal/${this.fk_animal}`,
+        headers: {
+          'token': localStorage.getItem('token'),
+          'Content-Type': 'application/json'
+        },
       };
 
       axios.request(config)
@@ -296,6 +335,7 @@ export default {
       this.confirmDeleteDialog = false;
     },
 
+    //edita informações do animal
     editedAnimal() {
       let data = JSON.stringify({
         "name": this.infoAnimal.name,
@@ -311,7 +351,7 @@ export default {
       let config = {
         method: 'put',
         maxBodyLength: Infinity,
-        url : process.env.VUE_APP_URL_API+`animals/update/${this.fk_animal}`,
+        url: process.env.VUE_APP_URL_API + `animals/update/${this.fk_animal}`,
         headers: {
           'token': localStorage.getItem('token'),
           'Content-Type': 'application/json'
@@ -330,14 +370,17 @@ export default {
     },
 
 
-
+    //consulta de apenas UM animal que estará relacionado ao dono (owneranimal)
     getAnimal() {
 
       let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: process.env.VUE_APP_URL_API+`animals/retrieveByAnimal?id=${this.fk_animal}`,
-        headers: {}
+        url: process.env.VUE_APP_URL_API + `animals/retrieveByAnimal?id=${this.fk_animal}`,
+        headers: {
+          'token': localStorage.getItem('token'),
+          'Content-Type': 'application/json'
+        },
       };
 
       axios.request(config)
@@ -351,15 +394,17 @@ export default {
 
     },
 
+    //consulta de animais
     getAnimals() {
       let data = '';
 
       let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: process.env.VUE_APP_URL_API+"animals/retrieve",
+        url: process.env.VUE_APP_URL_API + "animals/retrieve",
         headers: {
-          token: localStorage.getItem('token'),
+          'token': localStorage.getItem('token'),
+          'Content-Type': 'application/json'
         },
         data: data,
       };
@@ -374,12 +419,16 @@ export default {
           console.log(error);
         });
     },
+
+    //abre modal de historico de saude do animal
     openModalHealthHistory(animal) {
       this.fk_animal = animal.id;
       this.nameAnimal = animal.name;
       this.modalHealthHistory = true;
       this.getHealthHistory();
     },
+
+    //abre modal de informações do animal
     openModalInfoAnimal(animal) {
 
       this.fk_animal = animal.id;
@@ -388,6 +437,8 @@ export default {
       this.modalInfoAnimal = true;
       this.getAnimal();
     },
+
+    //cria novo registro de saúde no historico do animal
     createEvent() {
       let data = JSON.stringify({
         "event_date": moment(this.event_date).format('YYYY-MM-DD'),
@@ -399,8 +450,9 @@ export default {
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: process.env.VUE_APP_URL_API+"health_history",
+        url: process.env.VUE_APP_URL_API + "health_history",
         headers: {
+          'token': localStorage.getItem('token'),
           'Content-Type': 'application/json'
         },
         data: data
@@ -418,15 +470,17 @@ export default {
         });
 
     },
+    //cosnulta registro de saúde no historico do animal
     getHealthHistory() {
       let data = '';
 
       let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: process.env.VUE_APP_URL_API+"health_history/getAnimal/"+ this.fk_animal,
+        url: process.env.VUE_APP_URL_API + "health_history/getAnimal/" + this.fk_animal,
         headers: {
-          token: localStorage.getItem('token'),
+          'token': localStorage.getItem('token'),
+          'Content-Type': 'application/json'
         },
         data: data,
       };
