@@ -7,7 +7,7 @@
         <q-card class="my-card absolute-center q-ma-md" v-if="!token">
           <q-card-section>
             <div class="text-h6 text-weight-light ">Bem vindo ao PetHealthy</div>
-            <div class="text-subtitle2 text-weight-light">Pra você a manter as informações de saúde do seu animalzinho
+            <div class="text-subtitle2 text-weight-light">Para você a manter as informações de saúde do seu animal
             </div>
             <div class="text-subtitle2 text-weight-light">de estimação de forma organizada, segura e acessível.</div>
           </q-card-section>
@@ -44,6 +44,7 @@ import CreateUser from "./CreateUser.vue";
 import PetDashboard from "./PetDashboard.vue";
 import CreateAnimal from "./PetDashboard.vue";
 import ModalInfoAnimal from './ModalInfoAnimal.vue';
+
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 

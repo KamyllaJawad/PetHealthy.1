@@ -34,7 +34,7 @@ export default {
       let config = {
         method: "post",
         maxBodyLength: Infinity,
-        url:  process.env.VUE_APP_URL_API+"users/login",
+        url: `${process.env.VUE_APP_URL_API}users/login`,
         headers: {
           "Content-Type": "application/json",
         },

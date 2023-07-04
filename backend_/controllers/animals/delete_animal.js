@@ -27,6 +27,7 @@ module.exports = async (req, res) => {
     }
 
     await Animal.destroy({ where: { id: id } });
+    io.emit('deleteAnimal', {message: 'Animal Deletado!'})
     return res.send({ message: `Animal com o id ${id} deletado com sucesso!`});
     
   } catch (error) {
