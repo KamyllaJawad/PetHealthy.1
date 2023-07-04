@@ -35,17 +35,10 @@ https://trello.com/invite/b/CkrzgTVa/ATTI7323ec2ef63c17a23e617a1ffaccfcea4F48614
 
 ##### Diagrama de Caso de Uso:
 
-![](https://github.com/KamyllaJawad/PetHealthy/blob/master/Diagramas/Diagrama%20de%20caso%20de%20uso%20PetHealthy%20sem%20fundo.png?raw=true)
+![](https://github.com/KamyllaJawad/PetHealthy/blob/master/documentos/Caso%20de%20uso.png?raw=true)
+##### Diagrama Modelo de Entidade Relacional de Banco de Dados:
 
-##### Diagrama de Fluxo:
-
-![](https://github.com/KamyllaJawad/PetHealthy/blob/master/Diagramas/fluxo.jpeg?raw=true)
-
-##### Diagrama de Classe:
-
-![](https://raw.githubusercontent.com/KamyllaJawad/PetHealthy/master/Diagramas/Classe%20UML.jpeg)
-
- 
+![](https://github.com/KamyllaJawad/PetHealthy/blob/master/documentos/Modelo%20de%20entidade%20relacional_BD.drawio%20(1).png?raw=true)
 
 #### Referências:
 
@@ -54,5 +47,4 @@ https://trello.com/invite/b/CkrzgTVa/ATTI7323ec2ef63c17a23e617a1ffaccfcea4F48614
 ² Informações sobre a instituição: https://goo.gl/maps/jKm67ZDAwimvhKuQ6 (Acesso realizado em 12/03)
 
  
-
 ###### *Última atualização: 12/03/2023 21:40*
