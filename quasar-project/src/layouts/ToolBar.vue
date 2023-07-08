@@ -1,14 +1,11 @@
 <template>
   <q-header>
     <q-toolbar class="q-pa-xs q-toolbar-sm bg-custom-color">
-
-
       <div class="q-gutter-sm">
-         <q-icon color="cyan-2" size="md" name="cruelty_free"  />
+        <img src="../assets/logo-site-saude-animal.png" alt="pet healthy image" class="custom-icon" />
       </div>
       <span class="q-ml-xs text-large">Meus Pets</span>
       <q-space />
-
       <CreateAnimal />
       <DropdownUserSettings />
     </q-toolbar>
@@ -40,13 +37,13 @@ export default {
 }
 
 .q-toolbar-sm {
-    position: fixed;
+  position: fixed;
   height: 48px !important;
   min-height: 48px !important;
 }
 
 .bg-custom-color {
-  background-color: #00bcd4 !important;
+  background-color: #76d6cd !important;
 }
 
 .text-large {
@@ -57,5 +54,10 @@ export default {
 .is-mobile {
   position: relative;
   bottom: unset;
+}
+
+.custom-icon {
+  width: 36px;
+  height: 36px;
 }
 </style>

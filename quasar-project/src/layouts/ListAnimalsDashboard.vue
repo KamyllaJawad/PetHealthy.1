@@ -39,8 +39,8 @@
     </div>
 
     <!-- //-----------------------MODAL DE HISTORICO DE SAÚDE -->
-    <q-dialog v-model="modalHealthHistory" persistent>
-      <q-card style="width: 75%;" flat bp>
+    <q-dialog v-model="modalHealthHistory">
+      <q-card>
         <q-card-section class="row items-center q-pb-none text-weight-thin">
           <div class="text-weight-thin text-h6">{{ nameAnimal }}</div>
           <q-space />
@@ -48,7 +48,7 @@
         </q-card-section>
         <q-card-section>
           <q-card>
-            <q-tabs v-model="tab" dense class="text-grey" active-color="primary" indicator-color="primary" align="justify"
+            <q-tabs v-model="tab" dense class="text-grey" active-color="teal-7" indicator-color="light-blue-2" align="justify"
               narrow-indicator>
               <q-tab name="events" label="Novo Registro" />
               <q-tab name="vaccine" label="Vacina" />
@@ -57,13 +57,11 @@
               <q-tab name="others" label="Outros" />
             </q-tabs>
 
-            <q-separator />
-
             <q-tab-panels v-model="tab" animated>
               <q-tab-panel name="events">
-                <q-input v-model="event_date" label="Data do Evento" type="date" class="q-my-md" dense></q-input>
-                <q-select label="Tipo de Evento" v-model="fk_event_type" :options="eventOptions" dense></q-select>
-                <q-input label="Descrição ou Nome da Vacina/Vermífugo" v-model="description" type="textarea" rows="4"
+                <q-input v-model="event_date" color="cyan-6" label="Data do Evento" type="date" class="q-my-md" dense></q-input>
+                <q-select color="cyan-6" label="Tipo de Evento" v-model="fk_event_type" :options="eventOptions" dense></q-select>
+                <q-input color="cyan-6" label="Descrição ou Nome da Vacina/Vermífugo" v-model="description" type="textarea" rows="4"
                   dense></q-input>
                 <q-card-actions align="right">
                   <q-btn flat color="secondary" label="Salvar" @click="createEvent()"></q-btn>
@@ -72,59 +70,54 @@
 
               //tab de vacinas
               <q-tab-panel name="vaccine">
-                <div class="q-pa-md">
-                  <q-table flat :rows="rowsVaccine" :columns="columns" row-key="name" :separator="separator"
-                    selection="multiple" v-model:selected="selectedItems" class="text-weight-thin" />
-                  <q-card-actions align="right">
-                    <q-btn flat color="secondary" label="Editar" @click="editItem"
-                      :disable="selectedItems.length !== 1"></q-btn>
-                    <q-btn flat color="red-5" label="Excluir" @click="deleteItems"
-                      :disable="selectedItems.length === 0"></q-btn>
-                  </q-card-actions>
-                </div>
+
+                  <q-table class="text-weight-thin" :rows="rowsVaccine" :columns="columnsVaccine" row-key="label">
+                    <template v-slot:body-cell-delete="props">
+                      <q-td :props="props">
+                        <q-btn icon="delete" color="negative" dense flat @click="deleteHealth_History(props.row.id)" />
+                      </q-td>
+                    </template>
+                  </q-table>
+
               </q-tab-panel>
 
               //tab de vermifugo
               <q-tab-panel name="deworming">
-                <div class="q-pa-md">
-                  <q-table flat :rows="rowsDeworming" :columns="columns" row-key="name" :separator="separator"
-                    selection="multiple" v-model:selected="selectedItems" class="text-weight-thin" />
-                  <q-card-actions align="right">
-                    <q-btn flat color="secondary" label="Editar" @click="editItem"
-                      :disable="selectedItems.length !== 1"></q-btn>
-                    <q-btn flat color="red-5" label="Excluir" @click="deleteItems"
-                      :disable="selectedItems.length === 0"></q-btn>
-                  </q-card-actions>
-                </div>
+
+                  <q-table class="text-weight-thin" :rows="rowsDeworming" :columns="columnsDeworming" row-key="label">
+                    <template v-slot:body-cell-delete="props">
+                      <q-td :props="props">
+                        <q-btn icon="delete" color="negative" dense flat @click="deleteHealth_History(props.row.id)" />
+                      </q-td>
+                    </template>
+                  </q-table>
+
               </q-tab-panel>
 
               //tab de cirurgia
               <q-tab-panel name="surgery">
-                <div class="q-pa-md">
-                  <q-table flat :rows="rowsSurgery" :columns="columns" row-key="name" :separator="separator"
-                    selection="multiple" v-model:selected="selectedItems" class="text-weight-thin" />
-                  <q-card-actions align="right">
-                    <q-btn flat color="secondary" label="Editar" @click="editItem"
-                      :disable="selectedItems.length !== 1"></q-btn>
-                    <q-btn flat color="red-5" label="Excluir" @click="deleteItems"
-                      :disable="selectedItems.length === 0"></q-btn>
-                  </q-card-actions>
-                </div>
+
+                  <q-table class="text-weight-thin" :rows="rowsSurgery" :columns="columnsSurgery" row-key="label">
+                    <template v-slot:body-cell-delete="props">
+                      <q-td :props="props">
+                        <q-btn icon="delete" color="negative" dense flat @click="deleteHealth_History(props.row.id)" />
+                      </q-td>
+                    </template>
+                  </q-table>
+
               </q-tab-panel>
 
               //tab de outros
               <q-tab-panel name="others">
-                <div class="text-weight-thin text-h6">Outros</div>
-                <div class="q-pa-md">
-                  <q-table flat :rows="rowsOthers" :columns="columns" row-key="name" :separator="separator"
-                    selection="multiple" v-model:selected="selectedItems" class="text-weight-thin" />
-                  <q-card-actions align="right">
-                    <q-btn flat color="secondary" label="Editar" @click="editItem"
-                      :disable="selectedItems.length !== 1"></q-btn>
-                    <q-btn flat color="red-5" label="Excluir" @click="deleteItems"
-                      :disable="selectedItems.length === 0"></q-btn>
-                  </q-card-actions>
-                </div>
+
+                  <q-table class="text-weight-thin" :rows="rowsOthers" :columns="columnsOthers" row-key="label">
+                    <template v-slot:body-cell-delete="props">
+                      <q-td :props="props">
+                        <q-btn icon="delete" color="negative" dense flat @click="deleteHealth_History(props.row.id)" />
+                      </q-td>
+                    </template>
+                  </q-table>
+
               </q-tab-panel>
 
             </q-tab-panels>
@@ -182,13 +175,6 @@ import io from 'socket.io-client';
 import axios from 'axios';
 import { ref } from 'vue'
 import moment from 'moment';
-
-const columns = [
-  { name: 'vaccine', required: true, label: 'Nome da Vacina', align: 'left', field: 'vaccine', sortable: true },
-  { name: 'weight', required: true, label: 'Peso', align: 'left', field: 'weight', sortable: true },
-  { name: 'date', required: true, label: 'Data de Aplicação', align: 'left', field: 'date', sortable: true },
-]
-const rowsVaccine = []
 const rowsDeworming = []
 const rowsSurgery = []
 const rowsOthers = []
@@ -199,7 +185,16 @@ export default {
   },
   setup() {
     const selected = ref([])
+    const selectedSingle = ref([])
+
+    const deleteItems = () => { }
+    const editItem = () => { }
+
     return {
+      deleteItems,
+      editItem,
+      selectedSingle,
+      selected,
       tab: ref('events'),
       event_date: moment().format('YYYY-MM-DD'),
       description: ref(""),
@@ -214,6 +209,30 @@ export default {
   },
   data() {
     return {
+      rowsVaccine: [],
+      columnsVaccine: [
+        { name: 'event_date', required: true, label: 'Data de Aplicação', align: 'left', field: 'event_date', sortable: true, class: 'text-h6 text-weight-thin' },
+        { name: 'description', required: true, label: 'Nome da Vacina', align: 'left', field: 'description', sortable: true, class: 'text-h6 text-weight-thin' },
+        { name: 'delete', label: '', field: 'delete', align: 'center' },
+      ],
+      rowsDeworming: [],
+      columnsDeworming: [
+        { name: 'event_date', required: true, label: 'Data de Aplicação', align: 'left', field: 'event_date', sortable: true, class: 'text-h6 text-weight-thin' },
+        { name: 'description', required: true, label: 'Nome do Vermífugo', align: 'left', field: 'description', sortable: true, class: 'text-h6 text-weight-thin'},
+        { name: 'delete', label: '', field: 'delete', align: 'center' },
+      ],
+      rowsSurgery: [],
+      columnsSurgery: [
+        { name: 'event_date', required: true, label: 'Data do Procedimento', align: 'left', field: 'event_date', sortable: true , class: 'text-h6 text-weight-thin'},
+        { name: 'description', required: true, label: 'Procedimento', align: 'left', field: 'description', sortable: true , class: 'text-h6 text-weight-thin'},
+        { name: 'delete', label: '', field: 'delete', align: 'center' },
+      ],
+      rowsOthers: [],
+      columnsOthers: [
+        { name: 'event_date', required: true, label: 'Data da Ocorrência', align: 'left', field: 'event_date', sortable: true, class: 'text-h6 text-weight-thin'  },
+        { name: 'description', required: true, label: 'O que Houve?', align: 'left', field: 'description', sortable: true, class: 'text-h6 text-weight-thin' },
+        { name: 'delete', label: '', field: 'delete', align: 'center' },
+      ],
       listAnimals: [],
       socket: null,
       modalHealthHistory: false,
@@ -282,12 +301,12 @@ export default {
 
     //-----------deletar registro no historico de saúde
 
-    deleteHealth_History() {
-
+    deleteHealth_History(id) {
+      console.log(id)
       let config = {
         method: 'delete',
         maxBodyLength: Infinity,
-        url: process.env.VUE_APP_URL_API + `health_history/delete_historic/${this.id}`,
+        url: process.env.VUE_APP_URL_API + `health_history/delete_historic/${id}`,
         headers: {
           'token': localStorage.getItem('token'),
           'Content-Type': 'application/json'
@@ -488,13 +507,16 @@ export default {
       axios
         .request(config)
         .then((response) => {
+
           console.log(JSON.stringify(response.data));
           this.rowsVaccine = response.data.filter((event) => {
             return event.fk_event_type === 1
-          }).map((event) => {
-            const { id, fk_animal, fk_event_type, updatedAt, createdAt, ...eventWithoutCertainFields } = event;
-            return eventWithoutCertainFields;
-          });
+          })
+
+          this.rowsVaccine = this.rowsVaccine.map((vaccine) => {
+            vaccine.event_date = moment(vaccine.event_date).format('DD/MM/YYYY');
+            return vaccine;
+          })
 
           this.rowsDeworming = response.data.filter((event) => {
             return event.fk_event_type === 2
@@ -526,3 +548,75 @@ export default {
 
 };
 </script>
+
+<style scoped>
+.text-weight-light {
+  font-weight: 300;
+}
+
+.my-card {
+  max-width: 100%;
+}
+
+.bg-teal-4 {
+  background-color: #009688;
+}
+
+.q-mr-auto {
+  margin-right: auto;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.text-h6 {
+  font-size: 1.25rem;
+}
+
+.text-subtitle2 {
+  font-size: 0.875rem;
+}
+
+.q-separator {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.rounded-borders {
+  border-radius: 4px 4px 0 0;
+}
+
+.text-weight-light {
+  font-weight: 300;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.text-grey {
+  color: #9e9e9e;
+}
+
+.text-weight-thin {
+  font-weight: 100;
+}
+
+.fit {
+  width: fit-content;
+}
+
+.q-card-section.q-pb-none {
+  padding-bottom: 0;
+}
+
+.q-ml-sm {
+  margin-left: 8px;
+}
+
+.q-dialog__content {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+</style>
