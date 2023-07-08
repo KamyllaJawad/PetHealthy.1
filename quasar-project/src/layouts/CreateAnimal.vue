@@ -1,6 +1,6 @@
 <template>
   <div class="text-weight-light">
-    <q-btn  class="text-weight-light" color="cyan-3" label=" Novo Animal" icon="add" @click="openModal" v-if="!token"/>
+    <q-btn  class="text-weight-light" color="teal-4" label=" Novo Animal" icon="add" @click="openModal" v-if="!token"/>
 
     <q-dialog v-model="modalVisible" >
       <q-card class="q-pa-sm fit">

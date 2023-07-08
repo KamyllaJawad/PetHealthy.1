@@ -7,6 +7,7 @@ setTimeout(() => {
 
 module.exports = async (req, res) => {
     try {
+      console.log(req.params)
       const id = req.params.id; 
       const deletedRows = await deleteHealthHistory(id);
   
