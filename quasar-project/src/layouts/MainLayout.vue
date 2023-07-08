@@ -42,7 +42,7 @@ import { ref } from "vue";
 import LoginUser from "./LoginUser.vue";
 import CreateUser from "./CreateUser.vue";
 import PetDashboard from "./PetDashboard.vue";
-import CreateAnimal from "./PetDashboard.vue";
+import CreateAnimal from "./CreateAnimal.vue";
 import ModalInfoAnimal from './ModalInfoAnimal.vue';
 
 import 'bootstrap-icons/font/bootstrap-icons.css';
