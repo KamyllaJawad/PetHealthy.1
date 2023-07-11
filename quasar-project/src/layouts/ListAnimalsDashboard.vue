@@ -129,7 +129,7 @@
     <!-- //------------------------------MODAL DE INFORMAÇÃO DO ANIMAL PARA EDITAR E EXCLUIR -->
     <q-dialog v-model="modalInfoAnimal">
 
-      <q-card class="q-pa-sm fit">
+      <q-card class="q-pa-xs fit">
         <q-card-section>
           <div class="text-h6 text-weight-thin" style="text-align: center;">Informações do Animal</div>
         </q-card-section>
@@ -165,8 +165,6 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
-
-
   </div>
 </template>
 

@@ -20,8 +20,10 @@
             <q-input class="q-my-auto" color="light-blue-3" v-model="animal.reg_ibama" label="Registro IBAMA"></q-input>
 
             <div>
+              <q-card-actions align="right">
               <q-btn flat color="red-5" label="Cancelar" @click="closeModal"></q-btn>
               <q-btn flat color="secondary" label="Cadastrar" type="submit"></q-btn>
+              </q-card-actions>
             </div>
           </q-form>
         </q-card-section>
